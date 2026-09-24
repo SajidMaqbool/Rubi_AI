@@ -1,0 +1,29 @@
+# Environment variables (SECRET - never push)
+.env
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Vector store (auto-generated)
+vectorstore/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# VS Code
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db

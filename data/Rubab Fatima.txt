@@ -1,0 +1,53 @@
+
+
+
+Rubab Fatima
+Nationality: Pakistani
+Phone number: 03014971677
+Email address: fatimashazadi653@gmail.com
+
+
+Home: 54000 Lahore (Pakistan)
+
+ABOUT ME
+A highly passionate and dedicated software engineering undergraduate at UMT with a strong academic background and a solid foundation in analytical thinking. Proven track record of excellence in academics and hands-on experience in software development, ranging from system management tools to cutting-edge artificial intelligence. Committed to leveraging technical skills and leadership qualities to contribute effectively to innovative software projects.
+
+
+PROJECTS
+Hotel Management System In this project, I worked all on MySQL and python.
+Terminal-Based Chatbot (Operating Systems)
+•	Built a functional command-line chatbot 
+File & Management Systems (DSA & C++)
+•	Developed File Management, Library, and Book Management systems using C++ and DSA.
+Ongoing Projects (Software Construction & Development)
+Student Management System: Designing a robust system to manage student data and academic
+Shopify E-commerce Store — Giora.store
+Created and set up my own e-commerce store using Shopify. Managed product listings, including adding, updating, and removing products. Managed and updated product pricing and maintained the online store. Performed basic marketing activities to promote products and increase store visibility. Gained practical experience in e-commerce operations, product management, and digital marketing.
+
+
+EDUCATION AND TRAINING
+Bachelors of Science in Software Engineering 
+University of Management and Technology [ 2023 – 2027]
+Semester: 7TH
+City: Lahore | Country: Pakistan
+ICS-Computer Science 
+ Govt. College, Sheikhupura
+ [ 2020 – 2022 ]
+City: Sheikhupura| Country: Pakistan
+Matriculation
+National Model School, Sheikhupura [ 2018 – 2020 ]
+City: Sheikhupura| Country: Pakistan
+
+LANGUAGE SKILLS
+Mother tongue(s): Urdu | English
+
+DIGITAL SKILLS
+MS Office / Business Development/ Python / C / C++ / MySQL / Excel / HTML5 / CSS3
+
+
+CERTIFICATIONS & SEMINARS
+
+•	IEEE Seminar (UMT): Attended technical seminar focused on emerging engineering trends.
+•	Art of Presentation: Attended seminar by School of Liberal Arts on effective communication.
+
+
