@@ -4,9 +4,14 @@ chatbot.py
 This is the main chatbot module for Rubi AI.
 It combines retrieval, LLM generation, and chat history
 into a single conversational interface.
+
+Auto-builds the FAISS index on startup if it doesn't exist
+(required for cloud deployment like Streamlit Cloud).
 """
 
 import os
+import sys
+from pathlib import Path
 from typing import Dict, List, Optional
 
 from dotenv import load_dotenv
@@ -64,9 +69,42 @@ class RubiAIChatbot:
         """
         self.name = CHATBOT_NAME
         self.history = ChatHistory(max_turns=max_history_turns)
+
+        # Auto-build FAISS index if it doesn't exist (for cloud deployment)
+        self._ensure_index_exists()
+
         self.llm = self._init_llm()
         self.prompt = self._build_prompt()
         self.parser = StrOutputParser()
+
+    def _ensure_index_exists(self) -> None:
+        """Builds the FAISS index if it doesn't already exist."""
+        # Add src/ to path for imports
+        src_dir = Path(__file__).resolve().parent
+        if str(src_dir) not in sys.path:
+            sys.path.insert(0, str(src_dir))
+
+        base_dir = src_dir.parent
+        index_path = base_dir / "vectorstore" / "faiss_index"
+
+        if not index_path.exists():
+            print("[INFO] FAISS index not found. Building automatically...")
+            try:
+                from document_loader import load_all_documents
+                from text_splitter import split_documents
+                from embeddings import get_embedding_model
+                from vector_db import build_vectorstore
+
+                docs = load_all_documents()
+                chunks = split_documents(docs)
+                embeddings = get_embedding_model()
+                build_vectorstore(chunks, embeddings=embeddings, save=True)
+                print("[INFO] FAISS index built successfully.")
+            except Exception as e:
+                print(f"[ERROR] Failed to build FAISS index: {e}")
+                raise
+        else:
+            print(f"[INFO] FAISS index found at {index_path}")
 
     def _init_llm(self) -> ChatGroq:
         """Initializes Groq LLM."""
@@ -180,43 +218,20 @@ if __name__ == "__main__":
 
     bot = RubiAIChatbot()
 
-    # Auto-test mode (agar command line arguments na hon)
-    import sys
-    if len(sys.argv) > 1:
-        # Interactive mode
-        while True:
-            try:
-                user_input = input("You: ").strip()
-                if user_input.lower() in ("exit", "quit"):
-                    print(f"{CHATBOT_NAME}: Goodbye! Have a great day.")
-                    break
-                if user_input.lower() == "reset":
-                    bot.reset()
-                    print(f"{CHATBOT_NAME}: Conversation history cleared.")
-                    continue
-
-                response = bot.respond(user_input)
-                print(f"{CHATBOT_NAME}: {response}\n")
-            except KeyboardInterrupt:
-                print(f"\n{CHATBOT_NAME}: Goodbye!")
+    # Interactive mode
+    while True:
+        try:
+            user_input = input("You: ").strip()
+            if user_input.lower() in ("exit", "quit"):
+                print(f"{CHATBOT_NAME}: Goodbye! Have a great day.")
                 break
-    else:
-        # Auto-test mode
-        test_messages = [
-            "Hello!",
-            "What is Rubab's email?",
-            "What projects has she worked on?",
-            "What are her digital skills?",
-            "What is her education?",
-            "Does she know machine learning?",  # Not in CV — should say no
-        ]
+            if user_input.lower() == "reset":
+                bot.reset()
+                print(f"{CHATBOT_NAME}: Conversation history cleared.")
+                continue
 
-        for msg in test_messages:
-            print(f"You: {msg}")
-            response = bot.respond(msg)
+            response = bot.respond(user_input)
             print(f"{CHATBOT_NAME}: {response}\n")
-            print("-" * 60)
-
-        print("\n" + "=" * 60)
-        print("Chatbot test complete.")
-        print("=" * 60)
+        except KeyboardInterrupt:
+            print(f"\n{CHATBOT_NAME}: Goodbye!")
+            break
